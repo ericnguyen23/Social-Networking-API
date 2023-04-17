@@ -1,25 +1,33 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-// define user schema
-const userSchema = new mongoose.Schema({
+// set schema using mongoose
+const userSchema = new Schema({
   name: { type: String, required: true },
+  thoughts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "thought",
+    },
+  ],
 });
 
 // set model to User var
-const User = mongoose.model("User", userSchema);
+const User = model("user", userSchema);
 
-// seed data if empty
+const handleError = (err) => console.error(err);
+
+// seed
 User.find({}).exec((err, collection) => {
-  if (collection === 0) {
+  if (collection.length === 0) {
     User.insertMany(
       [
         { name: "Eric" },
-        { name: "Jane" },
-        { name: "Jacob" },
-        { name: "Steve" },
-        { name: "Lucy" },
-        { name: "Beth" },
         { name: "Jordan" },
+        { name: "Jacob" },
+        { name: "Jane" },
+        { name: "Jessica" },
+        { name: "Jeremy" },
+        { name: "Jude" },
       ],
       (insertErr) => {
         if (insertErr) {
