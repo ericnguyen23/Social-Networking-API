@@ -52,4 +52,18 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
+  // // Add a friend
+  // addFriends(req, res) {
+  //   User.findOneAndUpdate(
+  //     { _id: req.body.userId },
+  //     { $addToSet: { friends: user._id } },
+  //     { new: true }
+  //   )
+  //     .then((user) => {
+  //       !user
+  //         ? res.status(400).json({ message: "No users with that id!" })
+  //         : res.json("Added friend 🎉");
+  //     })
+  //     .catch((err) => res.status(500).json(err));
+  // },
 };
