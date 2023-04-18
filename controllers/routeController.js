@@ -3,7 +3,7 @@ const { User, Thought } = require("../models");
 module.exports = {
   // Get all users
   getUsers(req, res) {
-    User.find({}, (err, result) => {
+    Thought.find({}, (err, result) => {
       if (result) {
         res.status(200).json(result);
       } else {

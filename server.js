@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("./config/connection");
+const routes = require("./routes");
 
 // require Model
 const { User, Thought } = require("./models");
@@ -11,6 +12,7 @@ const app = express();
 // Express middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
 // get all users
 app.get("/all-users", (req, res) => {
