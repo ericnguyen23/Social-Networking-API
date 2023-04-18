@@ -7,24 +7,36 @@ const thoughtSchema = new Schema({
 
 const Thought = model("thought", thoughtSchema);
 
-const handleError = (err) => console.error(err);
+// const handleError = (err) => console.error(err);
 
 // seed
-Thought.find({}).exec((err, collection) => {
-  if (collection.length === 0) {
-    Thought.insertMany(
-      [
-        { thoughtName: "Thought One", thought: "I have a thought.." },
-        { thoughtName: "Thought Two", thought: "I have a thought.." },
-        { thoughtName: "Thought Three", thought: "I have a thought.." },
-      ],
-      (insertErr) => {
-        if (insertErr) {
-          handleError(insertErr);
-        }
-      }
-    );
-  }
-});
+// Thought.find({}).exec((err, collection) => {
+//   if (collection.length === 0) {
+//     Thought.insertMany(
+//       [
+//         {
+//           thoughtName: "Thought One",
+//           thought: "I have a thought..",
+//           userId: "643dda04df5cf369bfb70896",
+//         },
+//         {
+//           thoughtName: "Thought Two",
+//           thought: "I have a thought..",
+//           userId: "643dda04df5cf369bfb70893",
+//         },
+//         {
+//           thoughtName: "Thought Three",
+//           thought: "I have a thought..",
+//           userId: "643dda04df5cf369bfb70895",
+//         },
+//       ],
+//       (insertErr) => {
+//         if (insertErr) {
+//           handleError(insertErr);
+//         }
+//       }
+//     );
+//   }
+// });
 
 module.exports = Thought;
