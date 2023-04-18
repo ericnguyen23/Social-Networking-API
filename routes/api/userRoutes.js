@@ -3,6 +3,8 @@ const { getUsers, getSingleUser } = require("../../controllers/userController");
 
 // route = /api/users
 router.route("/").get(getUsers);
-router.route("/").get(getSingleUser);
+
+// /api/users/:userId
+router.route("/:userId").get(getSingleUser);
 
 module.exports = router;
