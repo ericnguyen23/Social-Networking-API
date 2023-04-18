@@ -2,11 +2,22 @@ const { Schema, model } = require("mongoose");
 
 // set schema using mongoose
 const userSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true, trim: true },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   thoughts: [
     {
       type: Schema.Types.ObjectId,
       ref: "thought",
+    },
+  ],
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
   ],
 });
@@ -21,13 +32,13 @@ User.find({}).exec((err, collection) => {
   if (collection.length === 0) {
     User.insertMany(
       [
-        { name: "Eric" },
-        { name: "Jordan" },
-        { name: "Jacob" },
-        { name: "Jane" },
-        { name: "Jessica" },
-        { name: "Jeremy" },
-        { name: "Jude" },
+        { name: "Eric", email: "Eric@gmail.com" },
+        { name: "Jordan", email: "Jordan@gmail.com" },
+        { name: "Jacob", email: "Jacob@gmail.com" },
+        { name: "Jane", email: "Jane@gmail.com" },
+        { name: "Jessica", email: "Jessica@gmail.com" },
+        { name: "Jeremy", email: "Jeremy@gmail.com" },
+        { name: "Jude", email: "Jude@gmail.com" },
       ],
       (insertErr) => {
         if (insertErr) {
