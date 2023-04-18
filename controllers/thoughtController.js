@@ -1,15 +1,15 @@
-const { User, Thought } = require("../models");
+const { User, Thought, Reaction } = require("../models");
 
 module.exports = {
   // Get all thoughts
   getThoughts(req, res) {
-    Thought.find({}, (err, result) => {
-      if (result) {
-        res.status(200).json(result);
-      } else {
-        res.status(500).json({ message: "something went wrong" });
-      }
-    });
+    Thought.find()
+      .populate({ path: "reactions" })
+      .then((thoughts) => res.json(thoughts))
+      .catch((err) => {
+        console.error({ message: err });
+        return res.status(500).json(err);
+      });
   },
   // Get single thought
   getSingleThought(req, res) {
@@ -62,5 +62,27 @@ module.exports = {
           : res.json(thought);
       })
       .catch((err) => res.status(500).json(err));
+  },
+  // Store reaction /api/thoughts/:thoughtId/reactions
+  addReaction(req, res) {
+    Reaction.create(req.body)
+      .then((reaction) => {
+        return Thought.findOneAndUpdate(
+          { _id: req.body.thoughtId },
+          { $addToSet: { reactions: reaction._id } },
+          { new: true }
+        );
+      })
+      .then((reaction) =>
+        !reaction
+          ? res.status(404).json({
+              message: "Reaction created, but found no thought with that ID",
+            })
+          : res.json("Added reaction 🎉")
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 };
