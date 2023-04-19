@@ -31,6 +31,9 @@ This applications runs via the command line and uses Insomnia to check CRUD oper
 - Add Reaction (POST) `http://localhost:3001/api/thoughts/:thoughtId/reactions` and pass in an object with values for `reactionBody` and `username`
 - Delete Reaction (DELETE) `http://localhost:3001/api/thoughts/:thoughtId/reactions/:reactionId`
 
+### Video Walk Through
+[Video Walk Through](https://drive.google.com/file/d/1zaAkt2mZoHsl9kNMrYu8Bj59JlgiQPM8/view)
+
 ### Screenshot of the project
 
 ![screenshot](./image/screenshot.png)
