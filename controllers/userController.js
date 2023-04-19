@@ -52,18 +52,20 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  // // Add a friend
-  // addFriends(req, res) {
-  //   User.findOneAndUpdate(
-  //     { _id: req.body.userId },
-  //     { $addToSet: { friends: user._id } },
-  //     { new: true }
-  //   )
-  //     .then((user) => {
-  //       !user
-  //         ? res.status(400).json({ message: "No users with that id!" })
-  //         : res.json("Added friend 🎉");
-  //     })
-  //     .catch((err) => res.status(500).json(err));
-  // },
+  // add Friend
+  addFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    )
+      // attempting to populate but not working as expected
+      .populate({ path: "friends" })
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: "No User find with this ID!" })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };

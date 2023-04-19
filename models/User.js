@@ -1,36 +1,38 @@
 const { Schema, model } = require("mongoose");
 
 // set schema using mongoose
-const userSchema = new Schema({
-  name: { type: String, required: true, unique: true, trim: true },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new Schema(
+  {
+    name: { type: String, required: true, unique: true, trim: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "thought",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
   },
-  thoughts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "thought",
-    },
-  ],
-  friends: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
-  ],
   {
     toJSON: {
       virtuals: true,
     },
     id: false,
   }
-});
+);
 
-// friend count virtual
-userSchema.virtual('friendCount').get(function () {
-  return this.frinds.length;
+// set friends virtual
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
 });
 
 // set model to User var
