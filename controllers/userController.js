@@ -6,6 +6,7 @@ module.exports = {
     User.find()
       // populate the thoughts object
       .populate({ path: "thoughts" })
+      .populate({ path: "friends" })
       .then((users) => res.json(users))
       .catch((err) => {
         console.error({ message: err });
@@ -28,7 +29,7 @@ module.exports = {
   createUser(req, res) {
     User.create(req.body)
       .then((user) => {
-        res.json("Created user 🎉");
+        res.json("Created user");
       })
       .catch((err) => res.status(500).json(err));
   },
@@ -63,9 +64,23 @@ module.exports = {
       .populate({ path: "friends" })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: "No User find with this ID!" })
+          ? res.status(404).json({ message: "No User found with this ID" })
           : res.json(user)
       )
+      .catch((err) => res.status(500).json(err));
+  },
+  // delete Friend
+  deleteFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((user) => {
+        !user
+          ? res.status(404).json({ message: "No User found with this ID" })
+          : res.json(user);
+      })
       .catch((err) => res.status(500).json(err));
   },
 };
